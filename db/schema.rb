@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426154559) do
+ActiveRecord::Schema.define(version: 20160428125803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160426154559) do
     t.integer  "payment_method_id"
     t.boolean  "default",                     default: false, null: false
     t.integer  "address_id"
+    t.json     "data"
   end
 
   add_index "spree_credit_cards", ["payment_method_id"], name: "index_spree_credit_cards_on_payment_method_id", using: :btree
@@ -783,6 +784,17 @@ ActiveRecord::Schema.define(version: 20160426154559) do
   end
 
   add_index "spree_shipping_rates", ["shipment_id", "shipping_method_id"], name: "spree_shipping_rates_join_index", unique: true, using: :btree
+
+  create_table "spree_skrill_transactions", force: :cascade do |t|
+    t.string   "email"
+    t.float    "amount"
+    t.string   "currency"
+    t.integer  "transaction_id"
+    t.integer  "customer_id"
+    t.string   "payment_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "spree_state_changes", force: :cascade do |t|
     t.string   "name"
